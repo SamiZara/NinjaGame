@@ -8,7 +8,6 @@ public class Katana : MonoBehaviour
     private float lastUsedTime;
     private Rigidbody2D playerRb;
     private bool isDashing;
-    private Vector2 speedBeforeDash;
     public Character character;
 
     void Start()
@@ -24,7 +23,7 @@ public class Katana : MonoBehaviour
             if (lastUsedTime + dashTimer <= Time.time)
             {
                 isDashing = false;
-                playerRb.velocity = speedBeforeDash;
+				playerRb.velocity = Vector3.zero;
             }
         }
     }
@@ -35,7 +34,6 @@ public class Katana : MonoBehaviour
         {
             isDashing = true;
             lastUsedTime = Time.time;
-            speedBeforeDash = playerRb.velocity;
             var v3 = Input.mousePosition;
             v3.z = 10.0f;
             v3 = Camera.main.ScreenToWorldPoint(v3);

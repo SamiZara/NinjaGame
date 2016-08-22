@@ -10,6 +10,7 @@ public class PhotonSendAndReceiveManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         PhotonNetwork.OnEventCall += OnEvent;
+		instance = this;
     }
 	
 	// Update is called once per frame
@@ -19,16 +20,19 @@ public class PhotonSendAndReceiveManager : MonoBehaviour {
 
     private void OnEvent(byte eventCode,object content,int senderId)
     {
+		Debug.Log ("incoming event");
         switch (eventCode)
         {
-            case 0:
-                Debug.Log(content);
+		case 0:
+			Struct.V3Float data = (Struct.V3Float)content;
+			Debug.Log (data.f+","+data.v3);
                 break;
         }
     } 
 
     public void MessageSender(byte eventCode,object content,bool reliable,RaiseEventOptions options)
     {
-        PhotonNetwork.RaiseEvent(0, (object)false, true, null);
+		Debug.Log ("Sending message");
+		PhotonNetwork.RaiseEvent(eventCode, content, reliable, options);
     }
 }
