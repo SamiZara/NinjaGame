@@ -20,7 +20,7 @@ public class CharacterRope : MonoBehaviour
         v3 = Camera.main.ScreenToWorldPoint(v3);
         lastRope = (GameObject)Instantiate(rope, transform.position, Quaternion.Euler(0, 0, MathHelper.degreeBetween2Points(transform.position, v3)));
         lastRope.GetComponent<RopeProjectile>().playerDistanceJoint = GetComponent<DistanceJoint2D>();
-        //PhotonNetwork.RaiseEvent(0, (object)false, true, null);
+        PhotonNetwork.RaiseEvent(0, (object)false, true, null);
     }
 
     public void CancelRope()
@@ -29,17 +29,5 @@ public class CharacterRope : MonoBehaviour
         joint.connectedBody = null;
         joint.enabled = false;
         Destroy(lastRope);
-    }
-
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.isWriting == true)
-        {
-            stream.SendNext(true);
-        }
-        else
-        {
-            Debug.Log(stream.ReceiveNext());
-        }
     }
 }

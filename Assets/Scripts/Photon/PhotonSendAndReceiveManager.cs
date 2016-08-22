@@ -5,8 +5,10 @@ using System.Collections.Generic;
 
 public class PhotonSendAndReceiveManager : MonoBehaviour {
 
+    public static PhotonSendAndReceiveManager instance;
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         PhotonNetwork.OnEventCall += OnEvent;
     }
 	
@@ -24,4 +26,9 @@ public class PhotonSendAndReceiveManager : MonoBehaviour {
                 break;
         }
     } 
+
+    public void MessageSender(byte eventCode,object content,bool reliable,RaiseEventOptions options)
+    {
+        PhotonNetwork.RaiseEvent(0, (object)false, true, null);
+    }
 }
