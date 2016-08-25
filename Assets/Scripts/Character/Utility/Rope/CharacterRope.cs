@@ -20,11 +20,6 @@ public class CharacterRope : MonoBehaviour
         v3.z = 10.0f;
         v3 = Camera.main.ScreenToWorldPoint(v3);
 		float degree = MathHelper.degreeBetween2Points(transform.position, v3);
-		//lastRope = (GameObject)Instantiate(rope, transform.position, Quaternion.Euler(0, 0, degree));
-        //lastRope.GetComponent<RopeProjectile>().playerDistanceJoint = GetComponent<DistanceJoint2D>();
-		Struct.V3Float content = new Struct.V3Float ();
-		content.v3 = transform.position;
-		content.f = degree;
 		GetComponent<PhotonView> ().RPC (
 			"RemoteMethodUseRope",
 			PhotonTargets.All,
@@ -34,18 +29,36 @@ public class CharacterRope : MonoBehaviour
 			}
 				
 		);
-		//PhotonSendAndReceiveManager.instance.MessageSender (0,content,true,null);
     }
 
 	[PunRPC]
 	public void RemoteMethodUseRope(Vector3 position,Quaternion rotation,int projectileId,PhotonMessageInfo info)
 	{
+        if(lastRope != null)
+        {
+            CancelRope();
+        }
 		lastRope = (GameObject)Instantiate(rope, position, rotation);
-		lastRope.GetComponent<RopeProjectile>().playerDistanceJoint = GetComponent<DistanceJoint2D>();
-		Debug.Log (refManager.character.isPlayer+",");
+        RopeProjectile proj = lastRope.GetComponent<RopeProjectile>();
+        proj.playerDistanceJoint = GetComponent<DistanceJoint2D>();
+        proj.owner = transform;
+        proj.creationTime = (float)info.timestamp;
+        Debug.Log("timestamp:"+info.timestamp);
 	}
 
     public void CancelRope()
+    {
+        GetComponent<PhotonView>().RPC(
+            "RemoteMethodCancelRope",
+            PhotonTargets.All,
+            new object[] { 
+            }
+
+        );
+    }
+
+    [PunRPC]
+    public void RemoteMethodCancelRope()
     {
         DistanceJoint2D joint = GetComponent<DistanceJoint2D>();
         joint.connectedBody = null;

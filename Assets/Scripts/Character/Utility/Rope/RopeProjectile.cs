@@ -1,26 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RopeProjectile : MonoBehaviour
+public class RopeProjectile : ProjectileBase
 {
-    public float ropeSpeed;
-    private Rigidbody2D rb;
     public DistanceJoint2D playerDistanceJoint;
-    private Vector3 collisionPoint;
-    private GameObject collidedObject;
     private bool inAir = true;
     private LineRenderer lr;
-    void Start()
+    public Transform owner;
+
+    new void Start()
     {
+        base.Start();
         lr = GetComponent<LineRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        float currentDegree = transform.rotation.eulerAngles.z;
-        rb.velocity = new Vector2(ropeSpeed * Mathf.Cos((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad), ropeSpeed * Mathf.Sin((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad));
     }
 
-    void Update()
-    {
-        lr.SetPosition(0, CharacterController.player.transform.position);
+    new void Update()
+    { 
+        lr.SetPosition(0, owner.position);
         if (!inAir)
         {
             float degree = MathHelper.degreeBetween2Points(CharacterController.player.transform.position, transform.position);
@@ -29,6 +25,7 @@ public class RopeProjectile : MonoBehaviour
         }
         else
         {
+            base.Update();
             lr.SetPosition(1, transform.position);
         }
     }
@@ -39,9 +36,7 @@ public class RopeProjectile : MonoBehaviour
         {
             rb.isKinematic = true;
             inAir = false;
-            collidedObject = coll.gameObject;
             playerDistanceJoint.connectedBody = coll.gameObject.GetComponent<Rigidbody2D>(); 
-            collisionPoint = coll.contacts[0].point;
             playerDistanceJoint.enabled = true;
             transform.parent = coll.transform;
             playerDistanceJoint.connectedAnchor = transform.localPosition;
