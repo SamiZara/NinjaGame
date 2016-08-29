@@ -41,15 +41,15 @@ public class RopeProjectile : ProjectileBase
             lr.SetPosition(1, transform.position);
             inAir = false;
             rb.isKinematic = true;
-            if (ownerRefManager.character.isPlayer)
-            {
+            //if (ownerRefManager.character.isPlayer)
+            //{
                 playerDistanceJoint.connectedBody = coll.gameObject.GetComponent<Rigidbody2D>();
                 playerDistanceJoint.enabled = true;
                 transform.parent = coll.transform;
                 playerDistanceJoint.connectedAnchor = transform.localPosition;
                 playerDistanceJoint.distance = Vector2.Distance(transform.position, owner.position);
                 Debug.Log(PhotonNetwork.time);
-            }
+            //}
         }
     }
 }
