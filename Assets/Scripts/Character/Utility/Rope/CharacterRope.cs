@@ -42,8 +42,8 @@ public class CharacterRope : MonoBehaviour
         RopeProjectile proj = lastRope.GetComponent<RopeProjectile>();
         proj.playerDistanceJoint = GetComponent<DistanceJoint2D>();
         proj.owner = transform;
-        proj.creationTime = (float)info.timestamp;
-        Debug.Log("timestamp:"+info.timestamp);
+        proj.creationTime = info.timestamp;
+        proj.ownerRefManager = refManager;
 	}
 
     public void CancelRope()

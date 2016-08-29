@@ -7,7 +7,7 @@ public class RopeProjectile : ProjectileBase
     private bool inAir = true;
     private LineRenderer lr;
     public Transform owner;
-
+    public CharachterReferenceManager ownerRefManager;
     new void Start()
     {
         base.Start();
@@ -20,8 +20,12 @@ public class RopeProjectile : ProjectileBase
         if (!inAir)
         {
             float degree = MathHelper.degreeBetween2Points(CharacterController.player.transform.position, transform.position);
-            if(playerDistanceJoint.distance > 0.3f)
-                playerDistanceJoint.distance /= 1.020f;    
+            if (playerDistanceJoint.distance > 0.3f)
+                playerDistanceJoint.distance -= 2f * Time.deltaTime ;
+            else
+            {
+                playerDistanceJoint.distance = 0.3f;
+            } 
         }
         else
         {
@@ -34,14 +38,18 @@ public class RopeProjectile : ProjectileBase
     {
         if (inAir)
         {
-            rb.isKinematic = true;
-            inAir = false;
-            playerDistanceJoint.connectedBody = coll.gameObject.GetComponent<Rigidbody2D>(); 
-            playerDistanceJoint.enabled = true;
-            transform.parent = coll.transform;
-            playerDistanceJoint.connectedAnchor = transform.localPosition;
-            playerDistanceJoint.distance = Vector2.Distance(transform.position, CharacterController.player.transform.position);
             lr.SetPosition(1, transform.position);
+            inAir = false;
+            rb.isKinematic = true;
+            if (ownerRefManager.character.isPlayer)
+            {
+                playerDistanceJoint.connectedBody = coll.gameObject.GetComponent<Rigidbody2D>();
+                playerDistanceJoint.enabled = true;
+                transform.parent = coll.transform;
+                playerDistanceJoint.connectedAnchor = transform.localPosition;
+                playerDistanceJoint.distance = Vector2.Distance(transform.position, owner.position);
+                Debug.Log(PhotonNetwork.time);
+            }
         }
     }
 }
