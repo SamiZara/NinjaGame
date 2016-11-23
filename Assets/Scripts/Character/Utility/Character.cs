@@ -11,8 +11,7 @@ public class Character : MonoBehaviour
 
     void Start()
     {
-        PhotonNetwork.sendRate = 60;
-        PhotonNetwork.sendRateOnSerialize = 60;
+
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
