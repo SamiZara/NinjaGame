@@ -4,16 +4,10 @@ using System.Collections;
 public class CharacterController : MonoBehaviour
 {
     public CharachterReferenceManager refManager;
-    private Rigidbody2D rb;
     public Transform playerToGroundRayCastPos,playerToLeftRayCastPos,playerToRightRayCastPos;
     public float horizontalSpeed,verticalSpeed,wallSlideSpeed;
     public static CharacterController player;
     private bool doubleJumpUsed = false;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     void Update()
     {
@@ -26,26 +20,26 @@ public class CharacterController : MonoBehaviour
         
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, verticalSpeed);
+            refManager.rb.velocity = new Vector2(refManager.rb.velocity.x, verticalSpeed);
             doubleJumpUsed = false;
             return;
         }
         else if (IsThereWallAtLeft())
         {
-            rb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
+            refManager.rb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
             doubleJumpUsed = false;
             return;
         }
         else if (IsThereWallAtRight())
         {
-            rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
+            refManager.rb.velocity = new Vector2(-horizontalSpeed, verticalSpeed);
             doubleJumpUsed = false;
             return;
         }
         else if (!doubleJumpUsed)
         {
             doubleJumpUsed = true;
-            rb.velocity = new Vector2(rb.velocity.x, verticalSpeed);
+            refManager.rb.velocity = new Vector2(refManager.rb.velocity.x, verticalSpeed);
             return;
         }
     }
@@ -54,15 +48,15 @@ public class CharacterController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(-horizontalSpeed, rb.velocity.y);
+            refManager.rb.velocity = new Vector2(-horizontalSpeed, refManager.rb.velocity.y);
         }
         else if (IsThereWallAtLeft())
         {
-            rb.velocity = new Vector2(0, -wallSlideSpeed);
+            refManager.rb.velocity = new Vector2(0, -wallSlideSpeed);
         }
         else
         {
-            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(-horizontalSpeed, rb.velocity.y), 0.1f);
+            refManager.rb.velocity = Vector2.Lerp(refManager.rb.velocity, new Vector2(-horizontalSpeed, refManager.rb.velocity.y), 0.1f);
         }
     }
 
@@ -70,11 +64,11 @@ public class CharacterController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            refManager.rb.velocity = new Vector2(0, refManager.rb.velocity.y);
         }
         else
         {
-            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(0, rb.velocity.y), 0.3f);
+            refManager.rb.velocity = Vector2.Lerp(refManager.rb.velocity, new Vector2(0, refManager.rb.velocity.y), 0.3f);
 
         }
     }
@@ -83,15 +77,15 @@ public class CharacterController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            rb.velocity = new Vector2(horizontalSpeed, rb.velocity.y);
+            refManager.rb.velocity = new Vector2(horizontalSpeed, refManager.rb.velocity.y);
         }
         else if (IsThereWallAtRight())
         {
-            rb.velocity = new Vector2(0, -wallSlideSpeed);
+            refManager.rb.velocity = new Vector2(0, -wallSlideSpeed);
         }
         else
         {
-            rb.velocity = Vector2.Lerp(rb.velocity, new Vector2(horizontalSpeed, rb.velocity.y), 0.1f);
+            refManager.rb.velocity = Vector2.Lerp(refManager.rb.velocity, new Vector2(horizontalSpeed, refManager.rb.velocity.y), 0.1f);
         }
     }
 

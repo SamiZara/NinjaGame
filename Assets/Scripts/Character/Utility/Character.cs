@@ -24,11 +24,12 @@ public class Character : MonoBehaviour
         if(stream.isWriting == true)
         {
             stream.SendNext(transform.position);
+            stream.SendNext(refManager.rb.velocity);
         }
         else if(stream.isReading == true)
         {
             targetPos = (Vector3)stream.ReceiveNext();
-            
+            refManager.rb.velocity = (Vector2)stream.ReceiveNext();
         }
     }
 

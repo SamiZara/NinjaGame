@@ -8,4 +8,5 @@ public class CharachterReferenceManager : MonoBehaviour {
     public CharacterInput characterInput;
     public Katana katana;
     public NinjaStar ninjaStar;
+    public Rigidbody2D rb;
 }
