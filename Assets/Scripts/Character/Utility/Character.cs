@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     public bool isPlayer;
     public int state;
     private Vector3 targetPos;
+    private Vector2 targetSpeed;
 
     void Start()
     {
@@ -35,7 +36,10 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        if(!isPlayer)
+        if (!isPlayer)
+        {
             transform.position = Vector3.Lerp(transform.position, targetPos, 0.05f);
+            refManager.rb.velocity = Vector2.Lerp(refManager.rb.velocity, targetSpeed, 0.05f);
+        }
     }
 }
