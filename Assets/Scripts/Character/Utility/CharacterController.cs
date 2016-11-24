@@ -26,7 +26,6 @@ public class CharacterController : MonoBehaviour
         
         if (IsGrounded())
         {
-            Debug.Log("Single Jump");
             rb.velocity = new Vector2(rb.velocity.x, verticalSpeed);
             doubleJumpUsed = false;
             return;
@@ -47,7 +46,6 @@ public class CharacterController : MonoBehaviour
         {
             doubleJumpUsed = true;
             rb.velocity = new Vector2(rb.velocity.x, verticalSpeed);
-            Debug.Log("Double jump");
             return;
         }
     }
