@@ -6,7 +6,6 @@ public class CharachterReferenceManager : MonoBehaviour {
     public Character character;
     public CharacterController characterController;
     public CharacterInput characterInput;
-    public Katana katana;
-    public NinjaStar ninjaStar;
+    public WeaponBase rangedWeapon,meleeWeapon;
     public Rigidbody2D rb;
 }

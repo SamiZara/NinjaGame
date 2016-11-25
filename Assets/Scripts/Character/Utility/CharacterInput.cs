@@ -43,13 +43,13 @@ public class CharacterInput : MonoBehaviour
             {
                 refManager.characterRope.CancelRope();
             }
-            if (Input.GetKeyDown("q"))
+            if (Input.GetMouseButtonDown(1))
             {
-                refManager.katana.Dash();
+                refManager.meleeWeapon.Shoot();
             }
             if (Input.GetMouseButton(0))
             {
-                refManager.ninjaStar.ThrowNinjaStar();
+                refManager.rangedWeapon.Shoot();
             }
         }
     }

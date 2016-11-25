@@ -43,7 +43,6 @@ public class CharacterRope : MonoBehaviour
         proj.playerDistanceJoint = GetComponent<DistanceJoint2D>();
         proj.owner = transform;
         proj.creationTime = info.timestamp;
-        proj.ownerRefManager = refManager;
 	}
 
     public void CancelRope()

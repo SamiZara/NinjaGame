@@ -11,8 +11,7 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Is there wall at right:"+ IsThereWallAtRight());
-        Debug.Log("Is there wall at left:" + IsThereWallAtLeft());
+
     }
 
     public void Jump()
@@ -91,17 +90,20 @@ public class CharacterController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics2D.Raycast(playerToGroundRayCastPos.position, Vector3.down, 0.015f);
+        int layerMask = LayerMask.GetMask("Obstacle");
+        return Physics2D.Raycast(playerToGroundRayCastPos.position, Vector3.down, 0.015f,layerMask);
     }
 
     private bool IsThereWallAtLeft()
     {
-        return Physics2D.Raycast(playerToLeftRayCastPos.position,Vector3.left,0.01f);
+        int layerMask = LayerMask.GetMask("Obstacle");
+        return Physics2D.Raycast(playerToLeftRayCastPos.position,Vector3.left,0.02f, layerMask);
     }
 
     private bool IsThereWallAtRight()
     {
-        return Physics2D.Raycast(playerToRightRayCastPos.position, Vector3.right, 0.01f);
+        int layerMask = LayerMask.GetMask("Obstacle");
+        return Physics2D.Raycast(playerToRightRayCastPos.position, Vector3.right, 0.02f, layerMask);
     }
 }
 

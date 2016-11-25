@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NinjaStarProjectile : MonoBehaviour {
+public class NinjaStarProjectile : ProjectileBase {
 
-    public float speed,angularSpeed;
-    private Rigidbody2D rb;
+    public float angularSpeed;
 
-	void Start () {
-        rb = GetComponent<Rigidbody2D>();
-        float myRotation = transform.rotation.eulerAngles.z;
-        rb.velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
-        rb.angularVelocity = angularSpeed;
+	new void Start () {
+        base.Start();
     }
 	
 	// Update is called once per frame
-	void Update () {
-	
+	new void Update () {
+        base.Update();
 	}
+
 }
