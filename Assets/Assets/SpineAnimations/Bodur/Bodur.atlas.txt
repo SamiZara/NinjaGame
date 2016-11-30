@@ -1,0 +1,20 @@
+
+Bodur.png
+size: 64,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Images/circle
+  rotate: false
+  xy: 2, 16
+  size: 33, 33
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+Images/short
+  rotate: true
+  xy: 2, 2
+  size: 12, 34
+  orig: 12, 34
+  offset: 0, 0
+  index: -1
